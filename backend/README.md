@@ -24,3 +24,8 @@ Este projeto está organizado na seguinte estrutura:
 - **`README.md`**: Este arquivo fornece uma visão geral do projeto, seu propósito e instruções para configuração e uso.
 
 Cada arquivo e pasta tem um propósito específico para garantir que o projeto seja modular, sustentável e fácil de navegar.
+
+**Regras para alterações no projeto**
+- Crie as alterações em branches separadas
+- Faça pull requests antes de subir para a develop ou para a main
+- Mantenha a ordem de atualizações de branches < branch teste > -> < branch develop > -> < branch main >
