@@ -1,6 +1,7 @@
 from decimal import Decimal
 import pandas as pd
-from backend.app.database.session import get_connection
+from app.database.session import get_connection
+
 
 def inserir_produto(nome, descricao, preco, quantidade):
     conn = get_connection()

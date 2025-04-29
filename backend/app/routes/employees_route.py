@@ -1,0 +1,64 @@
+from flask import Blueprint, request
+from pydantic import ValidationError
+from models.employee_model import Employee, EmployeePayload
+from controllers.employee_controller import ( get_all_employees_controller, 
+                                             get_employee_by_id_controller, 
+                                             insert_employee_controller, 
+                                             update_employee_controller )
+
+employees_bp = Blueprint('employees', __name__, url_prefix='/employees')
+
+
+# Define the route for getting employee data
+@employees_bp.route('/', methods=["GET"])
+def get_all_employees():
+    employees = get_all_employees_controller()
+    return {"employees": employees}
+
+
+@employees_bp.route('/<int:employee_id>', methods=["GET"])
+def get_employee_by_id(employee_id):
+
+    employee = get_employee_by_id_controller(employee_id)
+
+    if not employee:
+        return {"message": "Employee not found", "success": False}, 404
+    
+    return employee 
+
+
+@employees_bp.route('/', methods=["POST"])
+def insert_employee():
+    data = request.get_json()
+
+    if not data:
+        return {"message": "No data provided", "success": False}, 400
+
+    try:
+        employee = EmployeePayload(**data)
+    except ValidationError as e:
+        return {"message": "Invalid data", "errors": e.errors(), "success": False}, 400
+    
+    new_employee = insert_employee_controller(employee)
+
+    return new_employee, 201
+
+
+@employees_bp.route('/<int:employee_id>', methods=["PUT"])
+def update_employee(employee_id):
+    data = request.get_json()
+
+    if not data:
+        return {"message": "No data provided", "success": False}, 400
+
+    try:
+        employee = Employee(**data)
+    except ValidationError as e:
+        return {"message": "Invalid data", "errors": e.errors(), "success": False}, 400
+
+    employee_to_update = update_employee_controller(employee_id, employee)
+
+    if not employee_to_update:
+        return {"message": "Employee not found", "success": False}, 404
+
+    return employee_to_update, 200
