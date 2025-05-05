@@ -6,6 +6,7 @@ import Navbar from './shared/components/Navbar';
 import Funcionarios from './pages/funcionarios/components/Funcionario';
 import Vendas from './pages/vendas/components/Vendas';
 import Produtos from './pages/produtos/components/Produtos';
+import './shared/styles/dataGridStyle.css';
 
 function App() {
   

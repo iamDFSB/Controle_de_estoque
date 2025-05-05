@@ -1,0 +1,12 @@
+#root > div > div{
+    background-color: rgb(255, 255, 255);
+}
+
+#root > div > div > div{
+    background-color: rgb(248, 246, 246);
+}
+
+#root > div > div > div > div.MuiDataGrid-main.css-1bgckiu-MuiDataGrid-main > div.MuiDataGrid-virtualScroller.css-1vigakz-MuiDataGrid-virtualScroller > div.MuiDataGrid-topContainer.MuiDataGrid-container--top.css-b1wygl > div > div {
+    background-color: #1E1E2F;
+    color: white;
+}

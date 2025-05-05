@@ -6,6 +6,7 @@ class Employee(BaseModel):
     position: str
     salary: float | int
     department: str
+    email: str
 
 
 class EmployeePayload(BaseModel):
@@ -13,3 +14,4 @@ class EmployeePayload(BaseModel):
     position: str
     salary: float | int
     department: str
+    email: str

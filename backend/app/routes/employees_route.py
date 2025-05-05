@@ -24,24 +24,33 @@ def get_employee_by_id(employee_id):
     if not employee:
         return {"message": "Employee not found", "success": False}, 404
     
-    return employee 
+    return {
+            "employee": employee[0], 
+            "message": "Employee found", 
+            "success": True
+           }, 200
 
 
 @employees_bp.route('/', methods=["POST"])
 def insert_employee():
-    data = request.get_json()
+    data = request.get_json()["body"]
 
     if not data:
         return {"message": "No data provided", "success": False}, 400
 
     try:
+        data["salary"] = float(data["salary"])
         employee = EmployeePayload(**data)
     except ValidationError as e:
         return {"message": "Invalid data", "errors": e.errors(), "success": False}, 400
     
     new_employee = insert_employee_controller(employee)
 
-    return new_employee, 201
+    return {
+            "employee": new_employee,
+            "message": "Employee inserted successfully", 
+            "success": True
+           }, 201
 
 
 @employees_bp.route('/<int:employee_id>', methods=["PUT"])
@@ -61,4 +70,8 @@ def update_employee(employee_id):
     if not employee_to_update:
         return {"message": "Employee not found", "success": False}, 404
 
-    return employee_to_update, 200
+    return {
+            "employee": employee_to_update, 
+            "message": "Employee updated successfully", 
+            "success": True
+           }, 200

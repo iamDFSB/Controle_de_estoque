@@ -1,10 +1,10 @@
 from models.employee_model import Employee, EmployeePayload
 
 employees = [
-        {"id": 1, "name": "John Doe", "position": "Software Engineer", "salary": 60000, "department": "Engineering"},
-        {"id": 2, "name": "Jane Smith", "position": "Data Scientist", "salary": 70000,  "department": "Data Science"},
-        {"id": 3, "name": "Alice Johnson", "position": "Product Manager", "salary": 80000,  "department": "Product"},
-        {"id": 4, "name": "Bob Brown", "position": "UX Designer", "salary": 65000,  "department": "Design"}
+        {"id": 1, "name": "John Doe", "position": "Software Engineer", "salary": 60000, "department": "Engineering", "email":  "john.gmail.com"},
+        {"id": 2, "name": "Jane Smith", "position": "Data Scientist", "salary": 70000,  "department": "Data Science", "email": "jane.gmail.com"},
+        {"id": 3, "name": "Alice Johnson", "position": "Product Manager", "salary": 80000,  "department": "Product", "email": "alice.gmail.com"},
+        {"id": 4, "name": "Bob Brown", "position": "UX Designer", "salary": 65000,  "department": "Design", "email": "bob.gmail.com"},
 ]
 
 def get_all_employees_controller():
