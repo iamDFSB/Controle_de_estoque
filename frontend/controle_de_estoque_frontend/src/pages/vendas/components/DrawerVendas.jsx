@@ -37,7 +37,7 @@ const DrawerVendas = ({ openDrawer, setOpenDrawer, setVendas }) => {
         const response = await postSale(novaVenda);
         console.log(response);
 
-        setVendas((prev) => [...prev, novaVenda]);
+        setVendas((prev) => [...prev, response]);
         setSale({
             product: "",
             quantity: "",
