@@ -1,5 +1,7 @@
 from models.employee_model import Employee, EmployeePayload
 
+from database.queries import find_all_documents, insert_document, find_by_id
+
 employees = [
         {"id": 1, "name": "John Doe", "position": "Software Engineer", "salary": 60000, "department": "Engineering", "email":  "john.gmail.com"},
         {"id": 2, "name": "Jane Smith", "position": "Data Scientist", "salary": 70000,  "department": "Data Science", "email": "jane.gmail.com"},
@@ -11,32 +13,54 @@ def get_all_employees_controller():
     """
     Controller function to get all employees.
     """
-    return {"employees": employees}
+    employees = find_all_documents(
+        collection_name="employees"
+    )
+
+    employees = [
+        Employee(
+            **emp,
+            id=str(emp["_id"])
+        ).model_dump()
+        for emp in employees
+    ]
+
+
+    return {
+        "message": "Fetch all employees successfully",
+        "employees": employees
+        }
 
 
 def get_employee_by_id_controller(employee_id):
     """
     Controller function to get an employee by ID.
     """
-    employee = list(filter(lambda employee: employee["id"] == employee_id, employees))
-    return employee
+    employee = find_by_id(collection_name="employees", doc_id=employee_id)
+    
+    if not employee:
+        return None
 
+    employee = Employee(
+        **employee,
+        id=str(employee["_id"])
+    ).model_dump()
+
+    return {
+        "message": "Fetch employee successfully",
+        "employees": employee
+    }
 
 def insert_employee_controller(employee: EmployeePayload):
     """
     Controller function to insert a new employee.
     """
-    new_employee = {
-        "id": len(employees) + 1,
-        **employee.model_dump()
-    }
+    new_employee_id = insert_document("employees", employee)
 
-    if not new_employee:
+    if not new_employee_id:
         return None
-
-    employees.append(new_employee)
-
-    return new_employee
+    
+    return {"message": "Employee created successfully", "id": new_employee_id}
 
 
 def update_employee_controller(employee_id, employee: Employee):

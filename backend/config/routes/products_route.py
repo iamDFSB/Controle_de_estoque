@@ -1,12 +1,9 @@
 from flask import Blueprint, request
 from pydantic import ValidationError
-from models.products_model import Product, ProductPayload
 
-from controllers.products_controller import (get_all_products_controller, 
-                                             get_product_by_id_controller, 
-                                             insert_product_controller, 
-                                             update_product_controller)
-
+from controllers.products_controller import get_all_products_controller, get_product_by_id_controller, \
+    insert_product_controller, update_product_controller
+from models.products_model import ProductPayload
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
 

@@ -1,10 +1,9 @@
 from flask import Blueprint, request
 from pydantic import ValidationError
-from models.employee_model import Employee, EmployeePayload
-from controllers.employee_controller import ( get_all_employees_controller, 
-                                             get_employee_by_id_controller, 
-                                             insert_employee_controller, 
-                                             update_employee_controller )
+
+from controllers.employee_controller import get_all_employees_controller, get_employee_by_id_controller, \
+    insert_employee_controller, update_employee_controller
+from models.employee_model import EmployeePayload, Employee
 
 employees_bp = Blueprint('employees', __name__, url_prefix='/employees')
 
@@ -13,10 +12,17 @@ employees_bp = Blueprint('employees', __name__, url_prefix='/employees')
 @employees_bp.route('/', methods=["GET"])
 def get_all_employees():
     employees = get_all_employees_controller()
-    return {"employees": employees}
 
+    if not employees:
+        return {"message": "Employees not found", "success": False}, 404
 
-@employees_bp.route('/<int:employee_id>', methods=["GET"])
+    return {
+            "employees": employees, 
+            "message": "Employees found", 
+            "success": True
+           }, 200
+
+@employees_bp.route('/<string:employee_id>', methods=["GET"])
 def get_employee_by_id(employee_id):
 
     employee = get_employee_by_id_controller(employee_id)
@@ -53,7 +59,7 @@ def insert_employee():
            }, 201
 
 
-@employees_bp.route('/<int:employee_id>', methods=["PUT"])
+@employees_bp.route('/<string:employee_id>', methods=["PUT"])
 def update_employee(employee_id):
     data = request.get_json()
 

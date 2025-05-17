@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class Employee(BaseModel):
-    id: int
+    id: int | str
     name: str
     position: str
     salary: float | int
