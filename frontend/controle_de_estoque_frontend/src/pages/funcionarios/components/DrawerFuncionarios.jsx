@@ -29,9 +29,10 @@ const DrawerFuncionarios = ({ openDrawer, setOpenDrawer, setFuncionarios }) => {
         e.preventDefault();
         const response = await postEmployee(employee);
         console.log(response);
-        setFuncionarios((prev) => [...prev, { ...response, id: prev.length + 1 }]);
+        // setFuncionarios((prev) => [...prev, { ...response, id: prev.length + 1 }]);
         setEmployee({ nome: '', email: '', cargo: '' });
         setOpenDrawer(false);
+        document.location.reload();
       };
 
     return (

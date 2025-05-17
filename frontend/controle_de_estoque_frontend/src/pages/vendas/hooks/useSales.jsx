@@ -19,33 +19,38 @@ export const useSales = () => {
                 console.error(err);
                 setErro('Error fetching sales');
             })
-         
-        getAllEmployees()
-            .then((response) => {
-                employees = response;
-            })
-            .catch((err) => {
-                console.error(err);
-                setErro('Error fetching sales');
-            })
-
-        getAllSales()
-            .then((sales) => {
-                const salesFormatted = sales.map((sale) => {
-                    sale.product = products.find((product) => product?.id === sale.product_id)?.name || "";
-                    sale.employee = employees.find((employee) => employee?.id === sale.employee_id)?.name || "";
-                    return sale;
-                })
-                console.log(salesFormatted);
-                setSales(salesFormatted);
-            })
-            .catch((err) => {
-                console.error(err);
-                setErro('Error fetching sales');
-            })
             .finally(() => {
-                setLoading(false);
-            });
+                getAllEmployees()
+                    .then((response) => {
+                        employees = response;
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        setErro('Error fetching sales');
+                    })
+                    .finally(() => {
+                        getAllSales()
+                            .then((salesResponse) => {
+                                const salesFormatted = salesResponse.map((sale) => {
+                                    sale.product = products.find((product) => product?.id === sale.product_id)?.name || "";
+                                    sale.employee = employees.find((employee) => employee?.id === sale.employee_id)?.name || "";
+                                    return sale;
+                                })
+                                console.log(salesFormatted);
+                                setSales(salesFormatted);
+                            })
+                            .catch((err) => {
+                                console.error(err);
+                                setErro('Error fetching sales');
+                            })
+                            .finally(() => {
+                                setLoading(false);
+                            });
+                    })
+            })
+         
+
+
     }, []);
 
 

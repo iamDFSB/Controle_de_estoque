@@ -51,6 +51,7 @@ def get_employee_by_id_controller(employee_id):
         "employees": employee
     }
 
+
 def insert_employee_controller(employee: EmployeePayload):
     """
     Controller function to insert a new employee.
@@ -60,7 +61,7 @@ def insert_employee_controller(employee: EmployeePayload):
     if not new_employee_id:
         return None
     
-    return {"message": "Employee created successfully", "id": new_employee_id}
+    return {"message": "Employee created successfully", "id": str(new_employee_id)}
 
 
 def update_employee_controller(employee_id, employee: Employee):

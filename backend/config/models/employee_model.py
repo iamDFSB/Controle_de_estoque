@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import Any
 
 class Employee(BaseModel):
-    id: int | str
+    id: Any
     name: str
     position: str
     salary: float | int

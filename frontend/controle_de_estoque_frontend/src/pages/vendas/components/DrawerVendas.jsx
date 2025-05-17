@@ -37,7 +37,7 @@ const DrawerVendas = ({ openDrawer, setOpenDrawer, setVendas }) => {
         const response = await postSale(novaVenda);
         console.log(response);
 
-        setVendas((prev) => [...prev, response]);
+        // setVendas((prev) => [...prev, response]);
         setSale({
             product: "",
             quantity: "",
@@ -45,7 +45,7 @@ const DrawerVendas = ({ openDrawer, setOpenDrawer, setVendas }) => {
             total_price: ""
         });
         setOpenDrawer(false);
-    
+        document.location.reload();
     };
 
     const handleChange = (e) => {

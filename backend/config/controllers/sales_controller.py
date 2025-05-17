@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from pydantic import ValidationError
 from models.sales_model import Sale, SalePayload
+from database.queries import find_all_documents, insert_document, find_by_id
 
 sales = [
     {"id": 1, "product_id": 1, "employee_id": 1, "quantity": 2, "total_price": 200.0, "sale_date": "2023-10-01T00:00:00"},
@@ -11,8 +14,23 @@ sales = [
 def get_all_sales_controller():
     """Fetch all sales from the database."""
 
-    #TODO Replace this return for a database query and return all sales data 
-    return {"sales": sales}
+    sales = find_all_documents(
+        collection_name="sales"
+    )
+
+    sales = [
+        Sale(
+            **sale,
+            id=str(sale["_id"])
+        ).model_dump()
+        for sale in sales
+    ]
+
+
+    return {
+        "message": "Fetch all sales successfully",
+        "sales": sales
+        }
 
 
 def get_sale_by_id_controller(sale_id: int):
@@ -23,16 +41,19 @@ def get_sale_by_id_controller(sale_id: int):
     return sale
 
 
-def insert_sale_controller(data: dict):
+def insert_sale_controller(sale: SalePayload):
     """Insert a new sale into the database."""
-    data["id"] = len(sales) + 1
-    data["total_price"] = float(data["total_price"])
-    data["quantity"] = int(data["quantity"])
+    sale_date_replaced = sale["sale_date"].replace("Z", "+00:00")
+    sale_format_date = datetime.strftime(datetime.fromisoformat(sale_date_replaced), "%d/%m/%Y %H:%M:%S")
+    sale["sale_date"] = sale_format_date
 
-    #TODO Replace this append for a database insert function and return the inserted data
-    sales.append(data)
+    new_sale_id = insert_document("sales", SalePayload(**sale))
 
-    return data
+    if not new_sale_id:
+        return None
+    
+    return {"message": "Product created successfully", "id": str(new_sale_id)}
+
 
 
 def update_sale_controller(data: dict, sale_id: int):

@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import Any
 
 class Product(BaseModel):
-    id: int
+    id: Any
     name: str
     description: str
     price: float

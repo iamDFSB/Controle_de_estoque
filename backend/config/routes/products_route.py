@@ -52,7 +52,10 @@ def insert_product():
     except Exception as e:
         print(e)
 
-    product = insert_product_controller(data)
+
+    product = insert_product_controller(
+        ProductPayload(**data)
+    )
 
     if not product:
         return {"message": "Failed to insert product", "success": False}, 500

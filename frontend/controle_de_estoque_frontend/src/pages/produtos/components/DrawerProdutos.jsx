@@ -27,7 +27,7 @@ const DrawerProdutos = ({ openDrawer, setOpenDrawer, setProdutos }) => {
     const handleSubmit = async () => {
         const response = await postProduct(produto);
         console.log(response);
-        setProdutos((prev) => [...prev, response]);
+        // setProdutos((prev) => [...prev, response]);
         setProduto({
             name: "",
             price: "",
@@ -35,6 +35,7 @@ const DrawerProdutos = ({ openDrawer, setOpenDrawer, setProdutos }) => {
             description: "",
         });
         setOpenDrawer(false);
+        document.location.reload();
     }
 
     return (

@@ -1,4 +1,5 @@
 from models.products_model import Product, ProductPayload
+from database.queries import find_all_documents, insert_document, find_by_id
 
 products = [
         {"id": 1, "name": "Calça Jeans", "description": "Description A", "price": 10.99, "quantity": 100},
@@ -9,7 +10,23 @@ products = [
 
 
 def get_all_products_controller():
-    return {"products": products}
+    products = find_all_documents(
+        collection_name="products"
+    )
+
+    products = [
+        Product(
+            **prod,
+            id=str(prod["_id"])
+        ).model_dump()
+        for prod in products
+    ]
+
+
+    return {
+        "message": "Fetch all products successfully",
+        "products": products
+        }
 
 
 def get_product_by_id_controller(product_id: int):
@@ -17,20 +34,13 @@ def get_product_by_id_controller(product_id: int):
     return product
 
 
-def insert_product_controller(data: dict):
-    data["price"] = float(data["price"])
-    data["quantity"] = int(data["quantity"])
+def insert_product_controller(product: ProductPayload):
+    new_product_id = insert_document("products", product)
 
-    product = ProductPayload(**data)
-    new_product = {
-        "id": len(products) + 1,
-        "name": product.name,
-        "description": product.description,
-        "price": product.price,
-        "quantity": product.quantity
-    }
-    products.append(new_product)
-    return new_product
+    if not new_product_id:
+        return None
+    
+    return {"message": "Product created successfully", "id": str(new_product_id)}
 
 
 def update_product_controller(data: dict, product_id: int):
