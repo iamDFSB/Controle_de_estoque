@@ -1,8 +1,9 @@
 from datetime import datetime
-
+from bson import ObjectId
 from pydantic import ValidationError
 from models.sales_model import Sale, SalePayload
-from database.queries import find_all_documents, insert_document, find_by_id
+from models.products_model import Product
+from database.queries import find_all_documents, insert_document, find_by_id, update_document_by_id
 
 sales = [
     {"id": 1, "product_id": 1, "employee_id": 1, "quantity": 2, "total_price": 200.0, "sale_date": "2023-10-01T00:00:00"},
@@ -46,6 +47,41 @@ def insert_sale_controller(sale: SalePayload):
     sale_date_replaced = sale["sale_date"].replace("Z", "+00:00")
     sale_format_date = datetime.strftime(datetime.fromisoformat(sale_date_replaced), "%d/%m/%Y %H:%M:%S")
     sale["sale_date"] = sale_format_date
+
+    quantity = sale["quantity"]
+    product_id = ObjectId(sale["product_id"])
+
+    product = find_by_id(
+        collection_name="products", 
+        doc_id=product_id,
+    )
+
+    if not product:
+        return None
+    
+    if product["quantity"] < quantity:
+        return False
+    
+    result_of_quantity = product["quantity"] - quantity
+
+    product_model = Product(
+        id=product_id,
+        quantity=result_of_quantity,
+        name=product["name"],
+        description=product["description"],
+        price=product["price"]
+    ) 
+
+    result = update_document_by_id(
+        collection_name="products", 
+        doc_id=product_id, 
+        update_data=product_model
+    )
+
+    if result <= 0:
+        return False
+    
+    print(result)
 
     new_sale_id = insert_document("sales", SalePayload(**sale))
 

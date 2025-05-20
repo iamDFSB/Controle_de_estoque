@@ -28,5 +28,5 @@ def find_all_documents(collection_name):
 
 def update_document_by_id(collection_name, doc_id, update_data):
     collection = get_collection(collection_name)
-    result = collection.update_one({"id": doc_id}, {"$set": update_data.model_dump()})
+    result = collection.update_one({"_id": doc_id}, {"$set": update_data.model_dump()})
     return result.modified_count

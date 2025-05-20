@@ -17,7 +17,7 @@ def get_all_products():
     return {"products": products}
 
 
-@products_bp.route('/<int:product_id>', methods=["GET"])
+@products_bp.route('/<string:product_id>', methods=["GET"])
 def get_product_by_id(product_id):
     """
         Get a product by its ID.
@@ -28,7 +28,7 @@ def get_product_by_id(product_id):
         return {"message": "Product not found", "success": False}, 404
 
     return {
-            "product": product[0], 
+            "product": product, 
             "message": "Product found",
             "success": True
         }, 200

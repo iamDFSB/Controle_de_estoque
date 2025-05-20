@@ -1,3 +1,5 @@
+from bson import ObjectId
+
 from models.products_model import Product, ProductPayload
 from database.queries import find_all_documents, insert_document, find_by_id
 
@@ -16,8 +18,11 @@ def get_all_products_controller():
 
     products = [
         Product(
-            **prod,
-            id=str(prod["_id"])
+            id=str(prod["_id"]),
+            name=prod["name"],
+            description=prod["description"],
+            price=prod["price"],
+            quantity=prod["quantity"]
         ).model_dump()
         for prod in products
     ]
@@ -30,7 +35,16 @@ def get_all_products_controller():
 
 
 def get_product_by_id_controller(product_id: int):
-    product = list(filter(lambda product: product["id"] == product_id, products))
+    product = find_by_id(
+        collection_name="products", 
+        doc_id=ObjectId(product_id),
+    )
+
+    product = Product(
+        **product,
+        id=str(product["_id"])
+    ).model_dump()
+    
     return product
 
 
