@@ -1,7 +1,7 @@
 from bson import ObjectId
 
 from models.products_model import Product, ProductPayload
-from database.queries import find_all_documents, insert_document, find_by_id
+from database.queries import find_all_documents, insert_document, find_by_id, delete_document_by_id
 
 products = [
         {"id": 1, "name": "Calça Jeans", "description": "Description A", "price": 10.99, "quantity": 100},
@@ -16,6 +16,17 @@ def get_all_products_controller():
         collection_name="products"
     )
 
+    accepted_products = list(filter(lambda prod:  prod["quantity"] > 0 ,products))
+    neglected_products = list(filter(lambda prod:  prod["quantity"] <= 0 ,products))
+
+    
+    for nprod in neglected_products:
+        delete_document_by_id(
+            collection_name="products",
+            doc_id=nprod["_id"]
+        )
+
+    
     products = [
         Product(
             id=str(prod["_id"]),
@@ -24,7 +35,7 @@ def get_all_products_controller():
             price=prod["price"],
             quantity=prod["quantity"]
         ).model_dump()
-        for prod in products
+        for prod in accepted_products
     ]
 
 
@@ -57,7 +68,15 @@ def insert_product_controller(product: ProductPayload):
     return {"message": "Product created successfully", "id": str(new_product_id)}
 
 
-def update_product_controller(data: dict, product_id: int):
+def update_product_controller(data: dict, product_id: str):
     product = Product(**data)
     products[product_id] = data
     return product.model_dump()
+
+
+def delete_product_controller(product_id: str):
+    product_obj_id = ObjectId(product_id)
+    delete_document_by_id(
+        collection_name="products",
+        doc_id=product_obj_id
+    )

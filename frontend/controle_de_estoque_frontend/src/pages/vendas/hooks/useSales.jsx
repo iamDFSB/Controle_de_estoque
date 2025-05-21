@@ -8,46 +8,60 @@ export const useSales = () => {
 
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState(null);
-    let products;
-    let employees;
+    // let products;
+    // let employees;
     useEffect(() => {
-        getAllProducts()
-            .then((response) => {
-                products = response;
+        getAllSales()
+            .then((salesResponse) => {
+                console.log(salesResponse);
+                setSales(salesResponse);
             })
             .catch((err) => {
                 console.error(err);
                 setErro('Error fetching sales');
             })
             .finally(() => {
-                getAllEmployees()
-                    .then((response) => {
-                        employees = response;
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                        setErro('Error fetching sales');
-                    })
-                    .finally(() => {
-                        getAllSales()
-                            .then((salesResponse) => {
-                                const salesFormatted = salesResponse.map((sale) => {
-                                    sale.product = products.find((product) => product?.id === sale.product_id)?.name || "";
-                                    sale.employee = employees.find((employee) => employee?.id === sale.employee_id)?.name || "";
-                                    return sale;
-                                })
-                                console.log(salesFormatted);
-                                setSales(salesFormatted);
-                            })
-                            .catch((err) => {
-                                console.error(err);
-                                setErro('Error fetching sales');
-                            })
-                            .finally(() => {
-                                setLoading(false);
-                            });
-                    })
-            })
+                setLoading(false);
+            });
+
+
+        // getAllProducts()
+        //     .then((response) => {
+        //         products = response;
+        //     })
+        //     .catch((err) => {
+        //         console.error(err);
+        //         setErro('Error fetching sales');
+        //     })
+        //     .finally(() => {
+        //         getAllEmployees()
+        //             .then((response) => {
+        //                 employees = response;
+        //             })
+        //             .catch((err) => {
+        //                 console.error(err);
+        //                 setErro('Error fetching sales');
+        //             })
+        //             .finally(() => {
+        //                 getAllSales()
+        //                     .then((salesResponse) => {
+        //                         const salesFormatted = salesResponse.map((sale) => {
+        //                             sale.product = products.find((product) => product?.id === sale.product_id)?.name || "";
+        //                             sale.employee = employees.find((employee) => employee?.id === sale.employee_id)?.name || "";
+        //                             return sale;
+        //                         })
+        //                         console.log(salesFormatted);
+        //                         setSales(salesFormatted);
+        //                     })
+        //                     .catch((err) => {
+        //                         console.error(err);
+        //                         setErro('Error fetching sales');
+        //                     })
+        //                     .finally(() => {
+        //                         setLoading(false);
+        //                     });
+        //             })
+        //     })
          
 
 

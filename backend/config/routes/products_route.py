@@ -14,6 +14,7 @@ def get_all_products():
         Get all products data.
     """
     products = get_all_products_controller()
+
     return {"products": products}
 
 
@@ -71,7 +72,7 @@ def insert_product():
 
 
 # Define the route for updating a product
-@products_bp.route('/<int:product_id>', methods=["PUT"])
+@products_bp.route('/<string:product_id>', methods=["PUT"])
 def update_product(product_id):
     """
         Update a product by its ID.

@@ -16,3 +16,10 @@ class SalePayload(BaseModel):
     quantity: int | str
     sale_date: Any
     total_price: Any
+
+class SaleToMongo(BaseModel):
+    employee_name: str
+    product_name: str
+    quantity: int | str
+    sale_date: Any
+    total_price: Any

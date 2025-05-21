@@ -1,6 +1,6 @@
-from pymongo import MongoClient
-from database.connection import close_connection, get_collection
 import json
+from bson import ObjectId
+from database.connection import close_connection, get_collection
 
 def insert_document(collection_name, document):
     """Insert a document into a collection."""
@@ -16,7 +16,7 @@ def create_index(collection_name, field_name):
     return result
 
 
-def find_by_id(collection_name, doc_id):
+def find_by_id(collection_name, doc_id: ObjectId):
     collection = get_collection(collection_name)
     return collection.find_one({"_id": doc_id})
 
@@ -26,7 +26,12 @@ def find_all_documents(collection_name):
     return list(collection.find())
 
 
-def update_document_by_id(collection_name, doc_id, update_data):
+def update_document_by_id(collection_name, doc_id: ObjectId, update_data):
     collection = get_collection(collection_name)
     result = collection.update_one({"_id": doc_id}, {"$set": update_data.model_dump()})
     return result.modified_count
+
+
+def delete_document_by_id(collection_name, doc_id: ObjectId):
+    collection = get_collection(collection_name)
+    collection.delete_one({"_id": doc_id})
