@@ -1,6 +1,9 @@
 from pymongo import MongoClient
+import os
 
-client = MongoClient("mongodb+srv://root:root@cluster0.fcyigcq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+password = os.getenv("DB_PASS")
+
+client = MongoClient(f"mongodb+srv://root:{password}@cluster0.fcyigcq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["mydatabase"]
 
 def get_collection(collection_name):
