@@ -19,17 +19,29 @@ const Produtos = () => {
             mb: 2,
             alignItems: "center",
           }}
-        >
-          <Typography variant="h4" fontWeight={600} gutterBottom>
-            Lista de Produtos
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={() => setOpenDrawer(true)}
-            sx={{ borderRadius: 2 }}
-          >
-            Adicionar Produto
-          </Button>
+        >   
+            <Typography variant="h4" fontWeight={600} gutterBottom>
+              Lista de Produtos
+            </Typography>
+            <Box sx={{
+              display: "flex",
+              
+            }}>
+              <Button
+                variant="contained"
+                onClick={() => setOpenDrawer(true)}
+                sx={{ borderRadius: 2 }}
+              >
+                Baixar Base
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => setOpenDrawer(true)}
+                sx={{ borderRadius: 2 }}
+              >
+                Adicionar Produto
+              </Button>
+            </Box>
         </Box>
 
         <Box
