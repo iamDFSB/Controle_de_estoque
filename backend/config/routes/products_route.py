@@ -1,5 +1,7 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from pydantic import ValidationError
+import pandas as pd
+import io
 
 from controllers.products_controller import get_all_products_controller, get_product_by_id_controller, \
     insert_product_controller, update_product_controller
@@ -15,7 +17,7 @@ def get_all_products():
     """
     products = get_all_products_controller()
 
-    return {"products": products}
+    return products
 
 
 @products_bp.route('/<string:product_id>', methods=["GET"])
@@ -98,4 +100,22 @@ def update_product(product_id):
             "message": "Product updated successfully", 
             "success": True
            }, 200
+
+
+# Define the route for updating a product
+@products_bp.route('/products_file', methods=["GET"])
+def get_csv_products_file():
+    data = request.get_json()
+    df_products = pd.DataFrame(data)
+    buffer = io.StringIO()
+    df_products.to_csv(buffer, index=False)
+    buffer.seek(0)
+    print("Arquivo criado com sucesso.")
+    return Response(
+        buffer,
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment;filename=products.csv"
+        }
+    )
 

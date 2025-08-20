@@ -8,7 +8,7 @@ export const useProdutos = () => {
     useEffect(() => {
       getAllProducts()
       .then((products) =>{
-        console.log(products);
+        // console.log(products);
         setProdutos(products);
       })
       .catch((err) => {
