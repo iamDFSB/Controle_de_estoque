@@ -1,5 +1,8 @@
+from dotenv import load_dotenv
 from pymongo import MongoClient
 import os
+
+load_dotenv()
 
 password = os.getenv("DB_PASS")
 
@@ -17,5 +20,6 @@ def close_connection():
 # Example usage
 if __name__ == "__main__":
     collection = get_collection("mycollection")
+    print(collection)
     # Perform operations on the collection
     # close_connection()  # Uncomment to close the connection when done
