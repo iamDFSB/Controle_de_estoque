@@ -18,6 +18,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 
@@ -25,6 +26,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   const pages = [
         {button: "Home", value: "", icon: <HomeIcon/>},
+        {button: "Projetos", value: "projetos", icon: <AccountTreeIcon/>},
         {button: "Produtos", value: "produtos", icon: <LocalMallIcon/>}, 
         {button: "Funcionários", value: "funcionarios",  icon: <AccountCircleIcon/>}, 
         {button: "Vendas", value: "vendas",  icon: <ShoppingCartIcon/>},

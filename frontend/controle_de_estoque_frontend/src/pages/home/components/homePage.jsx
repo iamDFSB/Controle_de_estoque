@@ -118,7 +118,7 @@ function HomePage() {
       ]);
 
       // Extrair dados dos objetos aninhados conforme o formato da API
-      const productsData = productsResponse?.products?.products || [];
+      const productsData = productsResponse?.products || [];
       const salesData = salesResponse?.sales?.sales || [];
       const employeesData = employeesResponse?.employees || [];
 
