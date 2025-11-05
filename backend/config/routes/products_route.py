@@ -103,7 +103,7 @@ def update_product(product_id):
 
 
 # Define the route for updating a product
-@products_bp.route('/products_file', methods=["GET"])
+@products_bp.route('/products_file', methods=["POST"])
 def get_csv_products_file():
     data = request.get_json()
     df_products = pd.DataFrame(data)
