@@ -4,10 +4,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import DrawerProdutos from './DrawerProdutos';
 import { useProdutos } from '../hooks/useProdutos';
 import columns from '../api/dataGridColumns';
+import { getFileProducts } from '../api/getFileProducts';
 
 const Produtos = () => {
     const { produtos, loading, erro, setProdutos } = useProdutos();
-
     const [openDrawer, setOpenDrawer] = useState(false);
 
     return ( 
@@ -23,14 +23,11 @@ const Produtos = () => {
             <Typography variant="h4" fontWeight={600} gutterBottom>
               Lista de Produtos
             </Typography>
-            <Box sx={{
-              display: "flex",
-              
-            }}>
+            <Box sx={{}}>
               <Button
                 variant="contained"
-                onClick={() => setOpenDrawer(true)}
-                sx={{ borderRadius: 2 }}
+                onClick={() => getFileProducts(produtos)}
+                sx={{ borderRadius: 2, marginRight: 2 }}
               >
                 Baixar Base
               </Button>
