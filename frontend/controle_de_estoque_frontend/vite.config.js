@@ -13,6 +13,6 @@ export default defineConfig({
   preview: {
     host: true,
     port: process.env.PORT || 4173,
-    allowedHosts: ['controle-de-estoque-2-76f9.onrender.com']
+    allowedHosts: ['https://controle-de-estoque-2-76f9.onrender.com']
   }
 })
