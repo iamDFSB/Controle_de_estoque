@@ -10,6 +10,11 @@ from routes.projects_route import projects_bp
 app = Flask(__name__)
 CORS(app, origins="*")
 
+# Root route
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
 # Employees
 app.register_blueprint(employees_bp)
 
@@ -24,4 +29,4 @@ app.register_blueprint(projects_bp)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))  # Render define PORT automaticamente
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=port)
