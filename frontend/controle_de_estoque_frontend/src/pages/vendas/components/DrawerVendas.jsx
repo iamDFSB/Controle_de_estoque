@@ -11,6 +11,7 @@ import {
 import { useProdutos } from "../../produtos/hooks/useProdutos";
 import { useFuncionarios } from "../../funcionarios/hooks/useFuncionarios";
 import { postSale } from "../api/postSale";
+import { getAllSales } from "../api/getSales";
 
 const DrawerVendas = ({ openDrawer, setOpenDrawer, setVendas }) => {
     const { produtos } = useProdutos();
@@ -34,10 +35,9 @@ const DrawerVendas = ({ openDrawer, setOpenDrawer, setVendas }) => {
           sale_date: new Date().toISOString(), // data de hoje
         };
 
-        const response = await postSale(novaVenda);
-        console.log(response);
-
-        // setVendas((prev) => [...prev, response]);
+        await postSale(novaVenda);
+        const freshList = await getAllSales();
+        setVendas(freshList);
         setSale({
             product: "",
             quantity: "",
@@ -45,7 +45,6 @@ const DrawerVendas = ({ openDrawer, setOpenDrawer, setVendas }) => {
             total_price: ""
         });
         setOpenDrawer(false);
-        document.location.reload();
     };
 
     const handleChange = (e) => {

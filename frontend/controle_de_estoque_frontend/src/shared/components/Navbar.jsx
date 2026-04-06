@@ -19,6 +19,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import WifiIcon from '@mui/icons-material/Wifi';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 
@@ -30,6 +32,8 @@ export default function Navbar() {
         {button: "Produtos", value: "produtos", icon: <LocalMallIcon/>}, 
         {button: "Funcionários", value: "funcionarios",  icon: <AccountCircleIcon/>}, 
         {button: "Vendas", value: "vendas",  icon: <ShoppingCartIcon/>},
+        {button: "RFID", value: "rfid", icon: <WifiIcon/>},
+        {button: "Movimentações", value: "movimentacoes", icon: <SwapVertIcon/>},
     ];
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));

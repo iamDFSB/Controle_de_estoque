@@ -119,7 +119,7 @@ function HomePage() {
 
       // Extrair dados dos objetos aninhados conforme o formato da API
       const productsData = productsResponse?.products || [];
-      const salesData = salesResponse?.sales?.sales || [];
+      const salesData = salesResponse?.sales || [];
       const employeesData = employeesResponse?.employees || [];
 
       // Garantir que sempre seja um array
@@ -492,7 +492,7 @@ function HomePage() {
                       </Typography>
                     }
                     secondary={
-                      <Box sx={{ mt: { xs: 0.5, sm: 0 } }}>
+                      <Box component="span" sx={{ mt: { xs: 0.5, sm: 0 }, display: 'block' }}>
                         <Typography 
                           variant="caption" 
                           color="text.secondary"

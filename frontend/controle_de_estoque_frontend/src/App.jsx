@@ -6,6 +6,8 @@ import Funcionarios from './pages/funcionarios/components/Funcionario';
 import Vendas from './pages/vendas/components/Vendas';
 import Produtos from './pages/produtos/components/Produtos';
 import ProjectsBoard from "./pages/projetos/ProjectsBoard";
+import RfidEventLog from "./pages/rfid/RfidEventLog";
+import Movimentacoes from "./pages/movimentacoes/Movimentacoes";
 import './shared/styles/dataGridStyle.css';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
             <Route path="/produtos" element={<Produtos />} />
             <Route path="/funcionarios" element={<Funcionarios />} />
             <Route path="/vendas" element={<Vendas />} />
+            <Route path="/rfid" element={<RfidEventLog />} />
+            <Route path="/movimentacoes" element={<Movimentacoes />} />
           </Routes>
       </BrowserRouter>
 

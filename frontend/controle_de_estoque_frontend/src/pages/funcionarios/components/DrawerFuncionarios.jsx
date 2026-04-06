@@ -9,6 +9,7 @@ import {
   MenuItem
 } from "@mui/material";
 import { postEmployee } from "../api/postEmployees";
+import { getAllEmployees } from "../api/getEmployees";
 
 const DrawerFuncionarios = ({ openDrawer, setOpenDrawer, setFuncionarios }) => {
 
@@ -27,12 +28,11 @@ const DrawerFuncionarios = ({ openDrawer, setOpenDrawer, setFuncionarios }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await postEmployee(employee);
-        console.log(response);
-        // setFuncionarios((prev) => [...prev, { ...response, id: prev.length + 1 }]);
-        setEmployee({ nome: '', email: '', cargo: '' });
+        await postEmployee(employee);
+        const freshList = await getAllEmployees();
+        setFuncionarios(freshList);
+        setEmployee({ name: '', email: '', position: '', salary: '', department: '' });
         setOpenDrawer(false);
-        document.location.reload();
       };
 
     return (

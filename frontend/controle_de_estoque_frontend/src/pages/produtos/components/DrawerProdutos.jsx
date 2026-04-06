@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 
 import { postProduct } from "../api/postProducts";
+import { getAllProducts } from "../api/getProducts";
 
 const DrawerProdutos = ({ openDrawer, setOpenDrawer, setProdutos }) => {
     const [produto, setProduto] = useState({
@@ -25,9 +26,9 @@ const DrawerProdutos = ({ openDrawer, setOpenDrawer, setProdutos }) => {
     }
 
     const handleSubmit = async () => {
-        const response = await postProduct(produto);
-        console.log(response);
-        // setProdutos((prev) => [...prev, response]);
+        await postProduct(produto);
+        const freshList = await getAllProducts();
+        setProdutos(freshList);
         setProduto({
             name: "",
             price: "",
@@ -35,7 +36,6 @@ const DrawerProdutos = ({ openDrawer, setOpenDrawer, setProdutos }) => {
             description: "",
         });
         setOpenDrawer(false);
-        document.location.reload();
     }
 
     return (
